@@ -1,0 +1,174 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KJBM Official</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#080808;color:white;font-family:Arial,sans-serif}
+header{background:#151515;padding:18px;text-align:center;border-bottom:2px solid gold}
+.logo{font-size:42px;color:gold;font-weight:900;letter-spacing:7px;text-shadow:3px 3px #76520b,5px 5px #000}
+nav{display:flex;flex-wrap:wrap;justify-content:center;background:#222;padding:12px;gap:15px}
+nav a{color:gold;text-decoration:none;font-weight:bold}
+.hero{text-align:center;padding:75px 15px;background:radial-gradient(circle,#42300d,#080808 70%)}
+.hero h1{font-size:48px;color:gold;text-shadow:4px 4px #664600}
+.hero p{color:#ddd}
+button,.btn{background:linear-gradient(145deg,#ffe28a,#b88620);color:#111;padding:12px 18px;border:0;border-radius:9px;font-weight:bold;cursor:pointer}
+section{padding:35px 18px;max-width:950px;margin:auto}
+h2{color:gold;text-align:center}
+.card{background:#191919;border:1px solid #a77c25;padding:20px;border-radius:15px;margin:15px 0;box-shadow:5px 7px 15px #000}
+input,textarea{width:100%;padding:12px;margin:7px 0;background:#292929;color:white;border:1px solid gold;border-radius:7px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}
+.gallery img,.gallery video{width:100%;border-radius:10px}
+.item{padding:12px;background:#242424;border-left:3px solid gold;margin:10px 0}
+.small{color:#aaa;font-size:13px}
+footer{text-align:center;padding:25px;background:#151515;color:gold;border-top:1px solid gold}
+</style>
+</head>
+<body>
+
+<header>
+<div class="logo">KJBM</div>
+<p>Your World. Your Stories. Your Space.</p>
+</header>
+
+<nav>
+<a href="#home">Home</a>
+<a href="#about">About</a>
+<a href="#gallery">Gallery</a>
+<a href="#news">News</a>
+<a href="#downloads">Downloads</a>
+<a href="#contact">Contact</a>
+<a href="#account">Account</a>
+<a href="#admin">Admin</a>
+</nav>
+
+<div class="hero" id="home">
+<h1>WELCOME TO KJBM</h1>
+<p>Discover, Connect, Share and Explore.</p>
+<a class="btn" href="#about">Explore KJBM</a>
+</div>
+
+<section id="about">
+<h2>ABOUT KJBM</h2>
+<div class="card">
+<p>Welcome to KJBM, your personal online space. Here you can discover photographs, videos, news, announcements and useful resources.</p>
+<p>Our world. Our stories. Our space.</p>
+</div>
+</section>
+
+<section id="gallery">
+<h2>PHOTO & VIDEO GALLERY</h2>
+<div class="card">
+<p>Choose a photo or video to preview in the gallery.</p>
+<input type="file" id="media" accept="image/*,video/*">
+<input id="caption" placeholder="Media caption">
+<button onclick="uploadMedia()">Add Media</button>
+</div>
+<div class="grid gallery" id="galleryList"></div>
+</section>
+
+<section id="news">
+<h2>NEWS & ANNOUNCEMENTS</h2>
+<div id="newsList">
+<div class="item">Welcome to the official KJBM website!</div>
+</div>
+</section>
+
+<section id="downloads">
+<h2>DOWNLOADS</h2>
+<div class="card">
+<p>Welcome to the KJBM downloads centre.</p>
+<p>Resources and documents will be added here.</p>
+</div>
+</section>
+
+<section id="contact">
+<h2>CONTACT US</h2>
+<div class="card">
+<input id="contactName" placeholder="Your name">
+<input id="contactEmail" type="email" placeholder="Your email">
+<textarea id="contactMessage" placeholder="Your message"></textarea>
+<button onclick="sendMessage()">Prepare Message</button>
+</div>
+</section>
+
+<section id="account">
+<h2>LOGIN & REGISTRATION</h2>
+<div class="grid">
+<div class="card">
+<h3>Register</h3>
+<input id="regName" placeholder="Full name">
+<input id="regEmail" type="email" placeholder="Email">
+<input id="regPass" type="password" placeholder="Password">
+<button onclick="register()">Register</button>
+</div>
+<div class="card">
+<h3>Login</h3>
+<input id="loginEmail" type="email" placeholder="Email">
+<input id="loginPass" type="password" placeholder="Password">
+<button onclick="login()">Login</button>
+</div>
+</div>
+<p id="accountStatus" class="small"></p>
+</section>
+
+<section id="admin">
+<h2>ADMIN DASHBOARD</h2>
+<div class="card">
+<p>Add a news announcement to this browser preview.</p>
+<input id="announcement" placeholder="Write announcement">
+<button onclick="addNews()">Publish News</button>
+<p class="small">This demonstration does not publish to all visitors.</p>
+</div>
+</section>
+
+<footer>
+<p>© 2026 KJBM Official</p>
+<p>Your World. Your Stories. Your Space.</p>
+</footer>
+
+<script>
+function uploadMedia(){
+const file=document.getElementById('media').files[0];
+if(!file){alert('Choose a photo or video');return;}
+const url=URL.createObjectURL(file);
+const box=document.createElement('div');
+box.className='card';
+let el=document.createElement(file.type.startsWith('video')?'video':'img');
+el.src=url;
+if(el.tagName==='VIDEO')el.controls=true;
+box.appendChild(el);
+const p=document.createElement('p');
+p.textContent=document.getElementById('caption').value||file.name;
+box.appendChild(p);
+document.getElementById('galleryList').prepend(box);
+}
+function addNews(){
+const value=document.getElementById('announcement').value.trim();
+if(!value)return;
+const div=document.createElement('div');
+div.className='item';
+div.textContent=value;
+document.getElementById('newsList').prepend(div);
+document.getElementById('announcement').value='';
+}
+function sendMessage(){
+const name=document.getElementById('contactName').value;
+const email=document.getElementById('contactEmail').value;
+const message=document.getElementById('contactMessage').value;
+if(!name||!email||!message){alert('Complete all fields');return;}
+location.href='mailto:?subject=KJBM Message&body='+encodeURIComponent(name+'\n'+email+'\n'+message);
+}
+function register(){
+alert('Registration demonstration only. Secure accounts need an online database.');
+}
+function login(){
+alert('Login demonstration only. Secure login needs an online authentication service.');
+}
+</script>
+
+</body>
+</html>
